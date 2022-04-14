@@ -1,20 +1,35 @@
 <html lang="en">
   <head>
-
-    <title>{{ title or metadata.title }}</title>
-    <meta name="description" content="{{ description or metadata.description }}">
-    <link rel="stylesheet" href="/css/{{ cssUrl or '/css/index.css' }}">
-    {% if isWorstCase %}
-        <script>
-          var script = document.createElement('script');
-          script.src = "https://slowfil.es/file?type=js&delay=1000&async-snippet-in-head";
-          document.head.appendChild(script);
-        </script>
-    {% endif %}
-    <script src="/css/{{ jsUrl1 }}" {% if not isWorstCase %} type="module" {% endif %}></script>
-    <script src="/css/{{ jsUrl2 }}" {% if not isWorstCase %} type="module" {% endif %}></script>
+    {% if not isWorstCaseHead %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% endif %}
+    <title>{{ title or metadata.title }}</title>
+    {% if preloadedFonts %}
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600&amp;display=swap" media="all" onload="this.media='all'">
+    {% endif %}
+    <meta name="description" content="{{ description or metadata.description }}">
+    {% if not isWorstCaseHead %}
+    <script src="/css/{{ jsUrl1 }}" {% if isJsModule %} type="module" {% endif %}></script>
+    <script src="/css/{{ jsUrl2 }}" {% if isJsModule %} type="module" {% endif %}></script>
+    <link rel="stylesheet" href="/css/{{ cssUrl or '/css/index.css' }}">
+    {% endif %}
+    <script>
+        var script = document.createElement('script');
+        script.src = "https://slowfil.es/file?type=js&delay=1000&async-snippet-in-head";
+        document.head.appendChild(script);
+    </script>
+    {% if isWorstCaseHead %}
+    <link rel="stylesheet" href="/css/{{ cssUrl or '/css/index.css' }}">
+    <script src="/css/{{ jsUrl1 }}" {% if isJsModule %} type="module" {% endif %}></script>
+    <script src="/css/{{ jsUrl2 }}" {% if isJsModule %} type="module" {% endif %}></script>
+    {% endif %}
+    {% if isWorstCaseHead %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% endif %}
   </head>
   <body>
     <main{% if templateClass %} class="{{ templateClass }}"{% endif %}>
