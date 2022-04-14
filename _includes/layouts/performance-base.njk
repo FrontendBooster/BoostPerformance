@@ -1,4 +1,3 @@
-<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -6,8 +5,8 @@
     <title>{{ title or metadata.title }}</title>
     <meta name="description" content="{{ description or metadata.description }}">
     <link rel="stylesheet" href="/css/{{ cssUrl or '/css/index.css' }}">
-    <script src="/js/{{ jsUrl1 }}" type="module"></script>
-    <script src="/js/{{ jsUrl2 }}" type="module"></script>
+    <script src="/css/{{ jsUrl1 }}" type="module"></script>
+    <script src="/css/{{ jsUrl2 }}" type="module"></script>
   </head>
   <body>
     <main{% if templateClass %} class="{{ templateClass }}"{% endif %}>
